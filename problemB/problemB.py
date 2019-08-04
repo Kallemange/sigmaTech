@@ -2,12 +2,12 @@
 '''
 Solve a max # tests performed to get an I_max value
 Test will be performed by finding max amount of test needed.
-The method is iteratively updated, in versions,
+The method is iteratively updated,
 BRUTE FORCE Solution
 1)
 Investigating the first 12 situations, we get a solution looking like:
 I_max:  1| 2| 3| 4| 5| 6| 7| 8| 9| 10| 11| 12|
-x:      0| 1| 2| 2| 3| 3| 3| 4| 4| 4 |  4| 5 |
+x:      0| 1| 2| 2| 3| 3| 3| 4| 4| 4 |  4|  5|
 Indicating that the solution is a series where the number corresponds to an
 inductive sum such that the I_max <=1+2+...+m for some m. e.g. 1+2+3<8<1+2+3+4=10
 thus I_max=8-->4 tests
@@ -47,7 +47,6 @@ def main(path=0):
             else:
                 break
     series=calcMinForI()
-    values2=list(range(24))
     for i in values:
         print(series[i])
 
