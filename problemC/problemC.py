@@ -54,7 +54,7 @@ https://github.com/mpfeifer1/Kattis/blob/master/shibuyacrossing.cpp
 
 import sys
 import time
-import maximal_cliques as mc
+#import maximal_cliques as mc
 
 def main(path=0):
 
@@ -80,11 +80,8 @@ def main(path=0):
             n.append(int(line[0]))
             m.append(int(line[1]))
         file.close()
-    #print("time1: ", time.time()-t0)
 
     for i in range(M):
-        #print("i:", i)
-        #print("n[i]", n[i])
         if n[i] in graphDict:
             graphDict[n[i]].append(m[i])
         else:
@@ -93,26 +90,7 @@ def main(path=0):
             graphDict[m[i]].append(n[i])
         else:
             graphDict[m[i]]=[n[i]]
-    #print(graphDict)
-    #if t0 is not None:
-        #print("Time2: ",time.time()-t0)
-    maxNeighbors=0
-    for i in graphDict:
-        if len(graphDict[i])>maxNeighbors:
-            maxNeighbors=len(graphDict[i])
 
-    cliques=mc.find_cliques(graphDict)
-    #print(cliques)
-    #if t0 is not None:
-        #print("Time3: ",time.time()-t0)
-    maxClique=1
-    for i in cliques:
-        if len(i)>maxClique:
-            maxClique=len(i)
-    if t0 is not None:
-        print("Time3: ",time.time()-t0)
-    print(maxClique)
-    #print(cliques)
 
 if __name__ == '__main__':
     path="C:/Users/kalle/Documents/Sigma/sigmaTech/problemC"
