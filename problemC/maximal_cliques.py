@@ -10,11 +10,10 @@ def find_cliques(graph):
   r = set()
   x = set()
   cliques = []
-
+  t0=time.time()
   for v in degeneracy_ordering(graph):
     #print("degeneracy_ordering: ", time.time()-t0)
     neighs = graph[v]
-    t0=time.time()
     find_cliques_pivot(graph, r.union([v]), p.intersection(neighs), x.intersection(neighs), cliques)
     p.remove(v)
     x.add(v)
@@ -66,6 +65,5 @@ def degeneracy_ordering(graph):
         if deg > 0:
           degrees[w] -= 1
           degen[deg - 1].append(w)
-
   ordering.reverse()
   return ordering

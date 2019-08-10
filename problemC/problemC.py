@@ -55,7 +55,6 @@ https://github.com/mpfeifer1/Kattis/blob/master/shibuyacrossing.cpp
 import sys
 import time
 import maximal_cliques as mc
-import networkx as nx
 
 def main(path=0):
 
@@ -97,6 +96,11 @@ def main(path=0):
     #print(graphDict)
     #if t0 is not None:
         #print("Time2: ",time.time()-t0)
+    maxNeighbors=0
+    for i in graphDict:
+        if len(graphDict[i])>maxNeighbors:
+            maxNeighbors=len(graphDict[i])
+
     cliques=mc.find_cliques(graphDict)
     #print(cliques)
     #if t0 is not None:
@@ -119,5 +123,5 @@ if __name__ == '__main__':
     ex6=path+"/6.in"
     #main(ex1)
     #main(ex2)
-    main(ex2)
+    main(ex6)
     #main()
