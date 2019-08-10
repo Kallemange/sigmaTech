@@ -3,33 +3,37 @@
 # https://en.wikipedia.org/wiki/Bron-Kerbosch_algorithm
 
 from collections import defaultdict
+import time
 
 def find_cliques(graph):
   p = set(graph.keys())
   r = set()
   x = set()
   cliques = []
+
   for v in degeneracy_ordering(graph):
+    #print("degeneracy_ordering: ", time.time()-t0)
     neighs = graph[v]
+    t0=time.time()
     find_cliques_pivot(graph, r.union([v]), p.intersection(neighs), x.intersection(neighs), cliques)
     p.remove(v)
     x.add(v)
   #return sorted(cliques, lambda x: len(x))
-  return sorted(cliques)
+  #return sorted(cliques)
+  return(cliques)
 
 def find_cliques_pivot(graph, r, p, x, cliques):
-  if len(p) == 0 and len(x) == 0:
-    cliques.append(r)
-  else:
-
-    #u = iter(p.union(x)).next()
-    #Testing another version of iterating
-    u = next(iter(p.union(x)))
-    for v in p.difference(graph[u]):
-      neighs = graph[v]
-      find_cliques_pivot(graph, r.union([v]), p.intersection(neighs), x.intersection(neighs), cliques)
-      p.remove(v)
-      x.add(v)
+    if len(p) == 0 and len(x) == 0:
+        cliques.append(r)
+    else:
+        #u = iter(p.union(x)).next()
+        #Testing another version of iterating
+        u = next(iter(p.union(x)))
+        for v in p.difference(graph[u]):
+            neighs = graph[v]
+            find_cliques_pivot(graph, r.union([v]), p.intersection(neighs), x.intersection(neighs), cliques)
+            p.remove(v)
+            x.add(v)
 
 def degeneracy_ordering(graph):
   ordering = []

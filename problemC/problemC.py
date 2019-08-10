@@ -52,17 +52,17 @@ https://github.com/mpfeifer1/Kattis/blob/master/shibuyacrossing.cpp
 
 '''
 
-
-# Finds all maximal cliques in a graph using the Bron-Kerbosch algorithm. The input graph here is
-# in the adjacency list format, a dict with vertexes as keys and lists of their neighbors as values.
-# https://en.wikipedia.org/wiki/Bron-Kerbosch_algorithm
 import sys
+import time
 import maximal_cliques as mc
+import networkx as nx
 
 def main(path=0):
 
     n=[]
     m=[]
+    t0=None
+    graphDict={}
     if path==0:
         for line in sys.stdin:
             line=line.split()
@@ -70,40 +70,43 @@ def main(path=0):
             m.append(int(line[1]))
 
     else:
+        t0=time.time()
         file=open(path, 'r')
+        mn=file.readline().split()
+        N=int(mn[0])
+        M=int(mn[1])
         for line in file:
             line=line.split()
+
             n.append(int(line[0]))
             m.append(int(line[1]))
         file.close()
-    #number of
-    #print("n:",n)
-    #print("m",m)
-    N=n.pop(0)
-    M=m.pop(0)
-    testDict={}
-    #print("N:",N)
-    #print("M:",M)
-    #print("n:",n)
-    #print("m:",m)
+    #print("time1: ", time.time()-t0)
+
     for i in range(M):
         #print("i:", i)
         #print("n[i]", n[i])
-        if n[i] in testDict:
-            testDict[n[i]].append(m[i])
+        if n[i] in graphDict:
+            graphDict[n[i]].append(m[i])
         else:
-            testDict[n[i]]=[m[i]]
-        if m[i] in testDict:
-            testDict[m[i]].append(n[i])
+            graphDict[n[i]]=[m[i]]
+        if m[i] in graphDict:
+            graphDict[m[i]].append(n[i])
         else:
-            testDict[m[i]]=[n[i]]
-    #print(testDict)
-
-    cliques=mc.find_cliques(testDict)
+            graphDict[m[i]]=[n[i]]
+    #print(graphDict)
+    #if t0 is not None:
+        #print("Time2: ",time.time()-t0)
+    cliques=mc.find_cliques(graphDict)
+    #print(cliques)
+    #if t0 is not None:
+        #print("Time3: ",time.time()-t0)
     maxClique=1
     for i in cliques:
         if len(i)>maxClique:
             maxClique=len(i)
+    if t0 is not None:
+        print("Time3: ",time.time()-t0)
     print(maxClique)
     #print(cliques)
 
