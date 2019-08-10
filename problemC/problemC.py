@@ -52,80 +52,12 @@ https://github.com/mpfeifer1/Kattis/blob/master/shibuyacrossing.cpp
 
 '''
 
-#path="C:/Users/kalle/Documents/Sigma/sigmaTech/problemC"
-#ex1=path+"/1.in"
-#ex2=path+"/2.in"
-#ex3=path+"/3.in"
 
 # Finds all maximal cliques in a graph using the Bron-Kerbosch algorithm. The input graph here is
 # in the adjacency list format, a dict with vertexes as keys and lists of their neighbors as values.
 # https://en.wikipedia.org/wiki/Bron-Kerbosch_algorithm
 import sys
-from collections import defaultdict
-
-def find_cliques(graph):
-  p = set(graph.keys())
-  r = set()
-  x = set()
-  cliques = []
-  for v in degeneracy_ordering(graph):
-    neighs = graph[v]
-    find_cliques_pivot(graph, r.union([v]), p.intersection(neighs), x.intersection(neighs), cliques)
-    p.remove(v)
-    x.add(v)
-  #return sorted(cliques, lambda x: len(x))
-  return sorted(cliques)
-
-def find_cliques_pivot(graph, r, p, x, cliques):
-  if len(p) == 0 and len(x) == 0:
-    cliques.append(r)
-  else:
-
-    #u = iter(p.union(x)).next()
-    #Testing another version of iterating
-    u = next(iter(p.union(x)))
-    for v in p.difference(graph[u]):
-      neighs = graph[v]
-      find_cliques_pivot(graph, r.union([v]), p.intersection(neighs), x.intersection(neighs), cliques)
-      p.remove(v)
-      x.add(v)
-
-def degeneracy_ordering(graph):
-  ordering = []
-  ordering_set = set()
-  degrees = defaultdict(lambda : 0)
-  degen = defaultdict(list)
-  max_deg = -1
-  for v in graph:
-    deg = len(graph[v])
-    degen[deg].append(v)
-    degrees[v] = deg
-    if deg > max_deg:
-      max_deg = deg
-
-  while True:
-    i = 0
-    while i <= max_deg:
-      if len(degen[i]) != 0:
-        break
-      i += 1
-    else:
-      break
-    v = degen[i].pop()
-    ordering.append(v)
-    ordering_set.add(v)
-    for w in graph[v]:
-      if w not in ordering_set:
-        deg = degrees[w]
-        degen[deg].remove(w)
-        if deg > 0:
-          degrees[w] -= 1
-          degen[deg - 1].append(w)
-
-  ordering.reverse()
-  return ordering
-
-
+import maximal_cliques as mc
 
 def main(path=0):
 
@@ -136,7 +68,7 @@ def main(path=0):
             line=line.split()
             n.append(int(line[0]))
             m.append(int(line[1]))
-    '''
+
     else:
         file=open(path, 'r')
         for line in file:
@@ -144,7 +76,6 @@ def main(path=0):
             n.append(int(line[0]))
             m.append(int(line[1]))
         file.close()
-    '''
     #number of
     #print("n:",n)
     #print("m",m)
@@ -168,7 +99,7 @@ def main(path=0):
             testDict[m[i]]=[n[i]]
     #print(testDict)
 
-    cliques=find_cliques(testDict)
+    cliques=mc.find_cliques(testDict)
     maxClique=1
     for i in cliques:
         if len(i)>maxClique:
@@ -177,7 +108,13 @@ def main(path=0):
     #print(cliques)
 
 if __name__ == '__main__':
+    path="C:/Users/kalle/Documents/Sigma/sigmaTech/problemC"
+    ex1=path+"/1.in"
+    ex2=path+"/2.in"
+    ex3=path+"/3.in"
+    ex5=path+"/5.in"
+    ex6=path+"/6.in"
     #main(ex1)
     #main(ex2)
-    #main(ex3)
-    main()
+    main(ex2)
+    #main()

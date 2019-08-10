@@ -1,7 +1,7 @@
 # Finds all maximal cliques in a graph using the Bron-Kerbosch algorithm. The input graph here is
 # in the adjacency list format, a dict with vertexes as keys and lists of their neighbors as values.
 # https://en.wikipedia.org/wiki/Bron-Kerbosch_algorithm
-'''
+
 from collections import defaultdict
 
 def find_cliques(graph):
@@ -65,4 +65,3 @@ def degeneracy_ordering(graph):
 
   ordering.reverse()
   return ordering
-'''
