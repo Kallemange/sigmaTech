@@ -54,20 +54,105 @@ https://github.com/mpfeifer1/Kattis/blob/master/shibuyacrossing.cpp
 
 import sys
 import time
-import maximal_cliques as mc
-import networkx as nx
+#import maximal_cliques as mc
+t0=time.time()
+#import networkx as nx
+def find_cliques(G):
+    if len(G) == 0:
+        return
 
+    adj = {u: {v for v in G[u] if v != u} for u in G}
+    Q = [None]
+
+    subg = set(G)
+    cand = set(G)
+    u = max(subg, key=lambda u: len(cand & adj[u]))
+    ext_u = cand - adj[u]
+    stack = []
+
+    try:
+        while True:
+            if ext_u:
+                q = ext_u.pop()
+                cand.remove(q)
+                Q[-1] = q
+                adj_q = adj[q]
+                subg_q = subg & adj_q
+                if not subg_q:
+                    yield Q[:]
+                else:
+                    cand_q = cand & adj_q
+                    if cand_q:
+                        stack.append((subg, cand, ext_u))
+                        Q.append(None)
+                        subg = subg_q
+                        cand = cand_q
+                        u = max(subg, key=lambda u: len(cand & adj[u]))
+                        ext_u = cand - adj[u]
+            else:
+                Q.pop()
+                subg, cand, ext_u = stack.pop()
+    except IndexError:
+        pass
+
+class Graph(object):
+    node_dict_factory = dict
+    node_attr_dict_factory = dict
+    adjlist_outer_dict_factory = dict
+    adjlist_inner_dict_factory = dict
+    edge_attr_dict_factory = dict
+    graph_attr_dict_factory = dict
+    def __len__(self):
+        return len(self._node)
+
+    def __init__(self, incoming_graph_data=None, **attr):
+        self.graph_attr_dict_factory = self.graph_attr_dict_factory
+        self.node_dict_factory = self.node_dict_factory
+        self.node_attr_dict_factory = self.node_attr_dict_factory
+        self.adjlist_outer_dict_factory = self.adjlist_outer_dict_factory
+        self.adjlist_inner_dict_factory = self.adjlist_inner_dict_factory
+        self.edge_attr_dict_factory = self.edge_attr_dict_factory
+
+        self.graph = self.graph_attr_dict_factory()   # dictionary for graph attributes
+        self._node = self.node_dict_factory()  # empty node attribute dict
+        self._adj = self.adjlist_outer_dict_factory()  # empty adjacency dict
+        # attempt to load graph with data
+        if incoming_graph_data is not None:
+            convert.to_networkx_graph(incoming_graph_data, create_using=self)
+        # load graph attributes (must be after convert)
+        self.graph.update(attr)
+    def add_edge(self, u_of_edge, v_of_edge, **attr):
+        u, v = u_of_edge, v_of_edge
+        # add nodes
+        if u not in self._node:
+            self._adj[u] = self.adjlist_inner_dict_factory()
+            self._node[u] = self.node_attr_dict_factory()
+        if v not in self._node:
+            self._adj[v] = self.adjlist_inner_dict_factory()
+            self._node[v] = self.node_attr_dict_factory()
+        # add the edge
+        datadict = self._adj[u].get(v, self.edge_attr_dict_factory())
+        datadict.update(attr)
+        self._adj[u][v] = datadict
+        self._adj[v][u] = datadict
+
+#from networkx import Graph
+#print("time0:", time.time()-t0)
 def main(path=0):
 
     n=[]
     m=[]
     t0=None
-    graphDict={}
+    G=Graph()
     if path==0:
         for line in sys.stdin:
             line=line.split()
             n.append(int(line[0]))
             m.append(int(line[1]))
+
+        M=m.pop(0)
+        for i in range(M):
+            G.add_edge(int(n[i]), int(m[i]))
 
     else:
         t0=time.time()
@@ -77,37 +162,25 @@ def main(path=0):
         M=int(mn[1])
         for line in file:
             line=line.split()
-
-            n.append(int(line[0]))
-            m.append(int(line[1]))
+            G.add_edge(int(line[0]), int(line[1]))
+            #n.append(int(line[0]))
+            #m.append(int(line[1]))
         file.close()
-    #print("time1: ", time.time()-t0)
+    test=list(find_cliques(G))
+    maxGraph=1
+    for i in test:
+        if len(i)>maxGraph:
+            maxGraph=len(i)
+    print(maxGraph)
 
-    for i in range(M):
-        #print("i:", i)
-        #print("n[i]", n[i])
-        if n[i] in graphDict:
-            graphDict[n[i]].append(m[i])
-        else:
-            graphDict[n[i]]=[m[i]]
-        if m[i] in graphDict:
-            graphDict[m[i]].append(n[i])
-        else:
-            graphDict[m[i]]=[n[i]]
     #print(graphDict)
     #if t0 is not None:
-        #print("Time2: ",time.time()-t0)
-    cliques=mc.find_cliques(graphDict)
+        #print("Time2: ",time.time()-t0
     #print(cliques)
     #if t0 is not None:
         #print("Time3: ",time.time()-t0)
-    maxClique=1
-    for i in cliques:
-        if len(i)>maxClique:
-            maxClique=len(i)
-    if t0 is not None:
-        print("Time3: ",time.time()-t0)
-    print(maxClique)
+
+
     #print(cliques)
 
 if __name__ == '__main__':
@@ -119,5 +192,5 @@ if __name__ == '__main__':
     ex6=path+"/6.in"
     #main(ex1)
     #main(ex2)
+    #main(ex6)
     main(ex2)
-    #main()
