@@ -17,13 +17,14 @@ discard v otherwise.
 "https://en.wikipedia.org/wiki/Clique_problem#Finding_a_single_maximal_clique"
 
 ## Another representation of sample input 2
- | |1|2|3|4|5|
- | |-|-|-|-|-|
- |1|-|0|x|x|x|
- |2|0|-|x|x|x|
- |3|x|x|-|x|0|
- |4|x|x|x|-|0|
- |5|x|x|0|0|-|
+
+| |1|2|3|4|5|
+| |-|-|-|-|-|
+|1|-|0|x|x|x|
+|2|0|-|x|x|x|
+|3|x|x|-|x|0|
+|4|x|x|x|-|0|
+|5|x|x|0|0|-|
 
 Another method looks at the permutation diagram, where the vertices are remapped in greatest order
 of those that is adjacent to the lowest order. From here a longest decreasing subsequence can be 
