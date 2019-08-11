@@ -18,8 +18,8 @@ discard v otherwise.
 
 ## Another representation of sample input 2
 
-| |1|2|3|4|5|
-| |-|-|-|-|-|
+|Number |1|2|3|4|5|
+|-|-|-|-|-|-|
 |1|-|0|x|x|x|
 |2|0|-|x|x|x|
 |3|x|x|-|x|0|
