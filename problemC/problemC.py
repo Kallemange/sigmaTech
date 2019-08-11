@@ -54,7 +54,6 @@ https://github.com/lukaszantkowiak/kattis/blob/master/src/main/java/ShibuyaCross
 '''
 
 import sys
-#import maximal_cliques as mc
 def permutationDiagram(graph, N):
     perm=[]
     for i in range(N):
@@ -90,47 +89,24 @@ def longestSeq(seq):
 def main(path=0):
     n=[]
     m=[]
-    t0=None
     graphDict={}
-    if path==0:
-        line=sys.stdin.readline()
+    line=sys.stdin.readline()
+    line=line.split()
+    M=int(line[1])
+    N=int(line[0])
+    for line in sys.stdin:
         line=line.split()
-        M=int(line[1])
-        N=int(line[0])
-        for line in sys.stdin:
-            line=line.split()
-            n.append(int(line[0])-1)
-            m.append(int(line[1])-1)
-
-    else:
-        file=open(path, 'r')
-        mn=file.readline().split()
-        N=int(mn[0])
-        M=int(mn[1])
-        for line in file:
-            line=line.split()
-            n.append(int(line[0])-1)
-            m.append(int(line[1])-1)
-        file.close()
+        n.append(int(line[0])-1)
+        m.append(int(line[1])-1)
     graph={}
     for i in range(N):
         graph[i]=[]
     for i in range(M):
         graph[n[i]].append(m[i])
     perm=permutationDiagram(graph, N)
-    #print(perm)
     print(longestSeq(perm))
 
 main()
-if __name__ == '__main__':
-    path="C:/Users/kalle/Documents/Sigma/sigmaTech/problemC"
-    ex1=path+"/1.in"
-    ex2=path+"/2.in"
-    ex3=path+"/3.in"
-    ex5=path+"/5.in"
-    ex6=path+"/6.in"
-    ex7=path+"/7.in"
-    #main(ex1)
-    #main(ex2)
-    main(ex3)
+#if __name__ == '__main__':
+
     #main()
