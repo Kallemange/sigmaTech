@@ -38,3 +38,7 @@ http://old.kumlander.eu/Clique.htm
 Ex. of solved algorithm:
 This implementation closely resembles the solution here:
 https://github.com/lukaszantkowiak/kattis/blob/master/src/main/java/ShibuyaCrossing.java
+
+Using this method, sample input 2 is remapped as shown in figure below, for which the longest
+decreasing subsequence can be counted quickly
+![alt text](https://github.com/Kallemange/sigmaTech/blob/master/problemC/permutation.jpg)
