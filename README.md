@@ -26,6 +26,11 @@ discard v otherwise.
 |4|x|x|x|-|0|
 |5|x|x|0|0|-|
 
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
+
 Another method looks at the permutation diagram, where the vertices are remapped in greatest order
 of those that is adjacent to the lowest order. From here a longest decreasing subsequence can be 
 produced, which will correspond to the largest clique size. It is briefly introduced here:
