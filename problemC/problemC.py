@@ -48,50 +48,80 @@ function old
     return
 
 Ex. of solved algorithm:
-https://github.com/mpfeifer1/Kattis/blob/master/shibuyacrossing.cpp
+This implementation copies that of this method:
+https://github.com/lukaszantkowiak/kattis/blob/master/src/main/java/ShibuyaCrossing.java
 
 '''
 
 import sys
-import time
 #import maximal_cliques as mc
+def permutationDiagram(graph, N):
+    perm=[]
+    for i in range(N):
+        before=[]
+        for j in range(i):
+            if i in graph[j]:
+                before.append(j)
+        if before==[]:
+            perm.append(i)
+        else:
+            min = 100000
+            for b in before:
+                p = perm.index(b)
+                if (p<min):
+                    min = p
+            perm.insert(min, i)
+    return perm
+
+def longestSeq(seq):
+    lengths=[0]*len(seq)
+    lengths[0]=1
+    max=1
+    for i in range(1,len(seq)):
+        maxt=0
+        for j in range(len(seq)):
+            if seq[j]>seq[i] and lengths[j]>maxt:
+                maxt =lengths[j]
+        lengths[i]=maxt+1
+        if lengths[i]>max:
+            max=lengths[i]
+    return max
 
 def main(path=0):
-
     n=[]
     m=[]
     t0=None
     graphDict={}
     if path==0:
+        line=sys.stdin.readline()
+        line=line.split()
+        M=int(line[1])
+        N=int(line[0])
         for line in sys.stdin:
             line=line.split()
-            n.append(int(line[0]))
-            m.append(int(line[1]))
+            n.append(int(line[0])-1)
+            m.append(int(line[1])-1)
 
     else:
-        t0=time.time()
         file=open(path, 'r')
         mn=file.readline().split()
         N=int(mn[0])
         M=int(mn[1])
         for line in file:
             line=line.split()
-
-            n.append(int(line[0]))
-            m.append(int(line[1]))
+            n.append(int(line[0])-1)
+            m.append(int(line[1])-1)
         file.close()
-
+    graph={}
+    for i in range(N):
+        graph[i]=[]
     for i in range(M):
-        if n[i] in graphDict:
-            graphDict[n[i]].append(m[i])
-        else:
-            graphDict[n[i]]=[m[i]]
-        if m[i] in graphDict:
-            graphDict[m[i]].append(n[i])
-        else:
-            graphDict[m[i]]=[n[i]]
+        graph[n[i]].append(m[i])
+    perm=permutationDiagram(graph, N)
+    #print(perm)
+    print(longestSeq(perm))
 
-
+main()
 if __name__ == '__main__':
     path="C:/Users/kalle/Documents/Sigma/sigmaTech/problemC"
     ex1=path+"/1.in"
@@ -99,7 +129,8 @@ if __name__ == '__main__':
     ex3=path+"/3.in"
     ex5=path+"/5.in"
     ex6=path+"/6.in"
+    ex7=path+"/7.in"
     #main(ex1)
     #main(ex2)
-    main(ex6)
+    main(ex3)
     #main()
