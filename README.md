@@ -39,6 +39,10 @@ Ex. of solved algorithm:
 This implementation closely resembles the solution here:
 https://github.com/lukaszantkowiak/kattis/blob/master/src/main/java/ShibuyaCrossing.java
 
+<<<<<<< HEAD
 Using this method, sample input 2 is remapped as shown in figure below, for which the longest
 decreasing subsequence can be counted quickly
+=======
+
+>>>>>>> b94dc8f11aea8af63192f307dc1b7265e4993780
 ![alt text](https://github.com/Kallemange/sigmaTech/blob/master/problemC/permutation.jpg)
