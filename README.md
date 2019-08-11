@@ -16,9 +16,10 @@ the clique if it is adjacent to every vertex that is already in the clique, and
 discard v otherwise.
 "https://en.wikipedia.org/wiki/Clique_problem#Finding_a_single_maximal_clique"
 
-## Another representation of sample input 2
+### Another representation of sample input 2
+Here, it's shown as a graph with vertices as row-column names, x as adjacent and 0 as not adjacent.
 
-|Number |1|2|3|4|5|
+|v |1|2|3|4|5|
 |-|-|-|-|-|-|
 |1|-|0|x|x|x|
 |2|0|-|x|x|x|
@@ -26,11 +27,7 @@ discard v otherwise.
 |4|x|x|x|-|0|
 |5|x|x|0|0|-|
 
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
-
+### Permutation Diagram Solution
 Another method looks at the permutation diagram, where the vertices are remapped in greatest order
 of those that is adjacent to the lowest order. From here a longest decreasing subsequence can be 
 produced, which will correspond to the largest clique size. It is briefly introduced here:
@@ -39,5 +36,5 @@ as well as:
 http://old.kumlander.eu/Clique.htm
 
 Ex. of solved algorithm:
-This implementation copies that of this method:
+This implementation closely resembles the solution here:
 https://github.com/lukaszantkowiak/kattis/blob/master/src/main/java/ShibuyaCrossing.java
