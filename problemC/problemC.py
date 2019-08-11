@@ -22,39 +22,21 @@ _|1|2|3|4|5
 4|x|x|x|-|0
 5|x|x|0|0|-
 
-Also presented by Östergård:
-"A fast algorithm for the maximum clique problem"
-shows an algorith for solving this problem:
-function clique(U,size)
-    if |U|=0 then
-        if size>max then
-            max:=size
-            New record; save it.
-        end if
-        return:
-    end if
-    while U=/= {empty} do
-        if size + |U| <= max then
-            return
-        end if
-        i:=min{j|v_j in U}
-        U:=U\{v_i}
-        clique(U and N(v_i), size+1)
-    end while
-    return
-function old
-    max:=0
-    clique(V,0)
-    return
+Another method looks at the permutation diagram, where the vertices are remapped in greatest order
+of those that is adjacent to the lowest order. From here a longest decreasing subsequence can be
+produced, which will correspond to the largest clique size. It is briefly introduced here:
+https://en.wikipedia.org/wiki/Permutation_graph
+as well as:
+http://old.kumlander.eu/Clique.htm
 
 Ex. of solved algorithm:
 This implementation copies that of this method:
 https://github.com/lukaszantkowiak/kattis/blob/master/src/main/java/ShibuyaCrossing.java
 
+
 '''
 
 import sys
-#import maximal_cliques as mc
 def permutationDiagram(graph, N):
     perm=[]
     for i in range(N):
@@ -71,6 +53,7 @@ def permutationDiagram(graph, N):
                 if (p<min):
                     min = p
             perm.insert(min, i)
+    print(perm)
     return perm
 
 def longestSeq(seq):
@@ -90,47 +73,24 @@ def longestSeq(seq):
 def main(path=0):
     n=[]
     m=[]
-    t0=None
     graphDict={}
-    if path==0:
-        line=sys.stdin.readline()
+    line=sys.stdin.readline()
+    line=line.split()
+    M=int(line[1])
+    N=int(line[0])
+    for line in sys.stdin:
         line=line.split()
-        M=int(line[1])
-        N=int(line[0])
-        for line in sys.stdin:
-            line=line.split()
-            n.append(int(line[0])-1)
-            m.append(int(line[1])-1)
-
-    else:
-        file=open(path, 'r')
-        mn=file.readline().split()
-        N=int(mn[0])
-        M=int(mn[1])
-        for line in file:
-            line=line.split()
-            n.append(int(line[0])-1)
-            m.append(int(line[1])-1)
-        file.close()
+        n.append(int(line[0])-1)
+        m.append(int(line[1])-1)
     graph={}
     for i in range(N):
         graph[i]=[]
     for i in range(M):
         graph[n[i]].append(m[i])
     perm=permutationDiagram(graph, N)
-    #print(perm)
     print(longestSeq(perm))
 
 main()
-if __name__ == '__main__':
-    path="C:/Users/kalle/Documents/Sigma/sigmaTech/problemC"
-    ex1=path+"/1.in"
-    ex2=path+"/2.in"
-    ex3=path+"/3.in"
-    ex5=path+"/5.in"
-    ex6=path+"/6.in"
-    ex7=path+"/7.in"
-    #main(ex1)
-    #main(ex2)
-    main(ex3)
+#if __name__ == '__main__':
+
     #main()
