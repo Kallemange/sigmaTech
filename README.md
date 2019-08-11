@@ -38,3 +38,6 @@ http://old.kumlander.eu/Clique.htm
 Ex. of solved algorithm:
 This implementation closely resembles the solution here:
 https://github.com/lukaszantkowiak/kattis/blob/master/src/main/java/ShibuyaCrossing.java
+
+
+![alt text](https://github.com/Kallemange/sigmaTech/blob/master/problemC/permutation.jpg)
